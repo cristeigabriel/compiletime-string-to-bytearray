@@ -21,7 +21,8 @@ constexpr size_t _count_token( T &&str )
 }
 
 template
-<   //	How many occurances of a delimiting wildcard do we find in sig
+<   char skip_wildcard,
+	//	How many occurances of a delimiting wildcard do we find in sig
 	size_t CT,
 	typename T, size_t N = sizeof( T )>
 	constexpr auto _make_array( T &&sig )
@@ -71,6 +72,13 @@ template
 		//	Read before
 		if( i == 0 )
 		{
+			//	We don't care about this, and we don't want to use 0
+			if( sig[0] == skip_wildcard )
+			{
+				ret[0] = -1;
+				continue;
+			}
+
 			//	construct a base16 hex and emplace it at make_count
 			//	change 16 to 256 if u want the result to be when:
 			//	sig[0] == 0xA && sig[1] == 0xB = 0xA0B
@@ -84,6 +92,14 @@ template
 		{
 			if( ( skip == i /*&& !computed_skips[skip]*/ ) && skip < N - 1 )
 			{
+				//	We don't care about this, and we don't want to use 0
+				if( sig[i + 1] == skip_wildcard )
+				{
+					ret[make_count] = -1;
+					++make_count;
+					continue;
+				}
+
 				//	construct a base16 hex and emplace it at make_count
 				//	change 16 to 256 if u want the result to be when:
 				//	sig[0] == 0xA && sig[1] == 0xB = 0xA0B
@@ -97,11 +113,11 @@ template
 	return ret;
 }
 
-#define BUILD_ARRAY(a) _make_array<_count_token<' '>( std::move( a ) )>( std::move( a ) )
+#define BUILD_ARRAY(a) _make_array<'?', _count_token<' '>( std::move( a ) )>( std::move( a ) )
 
 int main()
 {
-	constexpr auto shit = BUILD_ARRAY( "AA BB CC DD 01 02 31 32" );
+	constexpr auto shit = BUILD_ARRAY( "?? AA BB CC DD ? ? ? 02 31 32" );
 	for( const auto &hex : shit )
 	{
 		printf( "%x ", hex );
