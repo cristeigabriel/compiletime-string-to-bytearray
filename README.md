@@ -13,3 +13,4 @@ For some reason you want to use strings for byte arrays? Well, here is the most 
 Tested and works with:
 - MSVC (std:c++latest)
 - LLVM Clang ((MS)std:c++latest)
+- gcc version 9.3.0 (Ubuntu 9.3.0-17ubuntu1~20.04) (-std=c++2a)
