@@ -135,10 +135,7 @@ namespace stoba
 
 			++skip_traversed_character_count;
 		}
-
-		//	finally traversed character count
-		auto traversed_character_count = 0u;
-
+		
 		//	make count (we will supposedly have at least an instance in our return array)
 		auto make_count = 1u;
 
