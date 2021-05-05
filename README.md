@@ -6,7 +6,7 @@ For some reason you want to use strings for byte arrays? Well, here is the most 
     <img width="780" height="240" src="resources/in_ide.png">
 </p>
 <p align="center">
-    <img width="780" height="240" src="resources/disassembled.png">
+    <img width="287" height="431" src="resources/disassembled.png">
 </p>
 
 # Compilers
